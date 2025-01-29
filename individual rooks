@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"
+  integrity="sha384-AHAnt9ZhGeHIrydA1Kp1L7FN+2UosbF7RQg6C+9Is/a7kDpQ1684C2iH2VWil6r4"
+  crossorigin="anonymous">
+</script>
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+</script>
+    <style>
+
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Individual Project</h1>
+
+    <h2>Two Rooks</h2>
+    <p>The following program randomly places two rooks on different squares of an 8x8 chessboard, checks if they are in a challenging configuration, and displays the result.</p>
+
+    <div>Python Code:</div>
+    <pre>
+import random
+
+#creating the board
+
+letters = ["a","b","c","d","e","f","g","h"]
+board = []
+positions = []
+y = []
+for j in letters:
+    for i in range(8):
+        board.append([j,i+1])
+y = [". "]*64
+        
+#function for seeing if 2 rooks are challenging
+def challenge(position1,position2):
+    if position1[0] == position2[0]:
+        return True
+    elif position1[1] == position2[1]:
+        return True
+    else:
+        return False
+
+rooks = 2
+
+positions.append([letters[random.randint(0,7)],random.randint(1,8)])
+#make sure the 2 rooks arent on the same square
+while True:
+    positions.append([letters[random.randint(0,7)],random.randint(1,8)])
+    if positions[0] != positions[1]:
+         break
+    else:
+         positions.pop()
+            
+           
+for j in range(rooks):
+    for i in range(len(board)):
+         if positions[j] == board[i]:
+              y[i] = "R "
+
+n = 0
+for j in range(1,9):
+    x = ""
+    for i in range(8):
+        x = x+y[i+n]
+    print(9-j,x)
+    n = n+8
+print("  a b c d e f g h")    
+
+if challenge(positions[0],positions[1]):
+    print("challenging")
+else:
+    print("non challenging")
+       
+
+    </pre>
+
+    <h2>Variable trials</h2>
+    <p>In order the change the amount of trials to see the proporsion of challenging to non challenging we must get rid the the code that prints out the board as we dont want the board to be printed hundreds of times. Then all we do is loops through the program a given amount of times.</p>
+
+    <div>Python Code:</div>
+    <pre>
+import random
+
+letters = ["a","b","c","d","e","f","g","h"]
+positions = []
+        
+def challenge(position1,position2):
+    if position1[0] == position2[0]:
+        return True
+    elif position1[1] == position2[1]:
+        return True
+    else:
+        return False
+
+count = 0
+num_trials = int(input("how many trials? "))
+
+
+for j in range(num_trials):
+    positions.append([letters[random.randint(0,7)],random.randint(1,8)])
+    while True:
+        positions.append([letters[random.randint(0,7)],random.randint(1,8)])
+        if positions[0] != positions[1]:
+            break
+        else:
+            positions.pop()
+            
+    
+        
+    if challenge(positions[0],positions[1]):
+        count = count+1
+        
+    positions.clear()
+print(count)
+print((count/num_trials)*100,"% are challenging")
+    </pre>
+	<h3>Maths</h3>
+	<p>To calculate the pobability of 2 rooks being challenging we do the number of squares that result in it being challenging, being 14 (7 for both row and column) divided by the total squares the second rook could be, being 63. This gives $\frac{14}{63}$ = 22.22% chance of being challenging. Which is the same as what the program gives with a large number of trials.</p>
+    <h2>Variable Number of Rooks</h2>
+    <p>This code will now ask for a number of rooks to be placed and find the proportion of challenging arrangment based on the number of trials given</p>
+
+    <div>Python Code:</div>
+    <pre>
+import random
+
+letters = ["a","b","c","d","e","f","g","h"]
+positions = []
+        
+def challenge(position1,position2):
+    if position1[0] == position2[0]:
+        return True
+    elif position1[1] == position2[1]:
+        return True
+    else:
+        return False
+
+rooks = int(input("number rooks? "))
+count = 0
+num_trials = int(input("how many trials? "))
+
+
+
+for j in range(num_trials):
+    positions.append([letters[random.randint(0,7)],random.randint(1,8)])
+    for i in range(rooks-1):
+        while True:
+            positions.append([letters[random.randint(0,7)],random.randint(1,8)])
+            if positions[i] != positions[i+1]:
+                break
+            else:
+                positions.pop()
+            
+    challenging = False
+    for i in range(rooks-1):
+        for k in range(i+1,rooks):
+            if challenge(positions[i],positions[k]):
+                challenging = True
+                break
+        if challenging:
+            break
+        
+    if challenging:
+        count = count+1
+        
+    positions.clear()
+print(count)
+print((count/num_trials)*100,"% are challenging")
+    
+    </pre>
+
+    <h2>Mathematical Explanation</h2>
+    <p>To find the probability of non challenging arragements we look for the possible squares the next rook to be placed can be. To do this we start with the second rook which has 63 available squares 49 of which result in a non challenging arrangment, then for 3 rooks it has 62 available sqaures 36 of which result in a non challengin arrangment, repeating this down up to the 8th rook gives $\frac{49}{63} + \frac{36}{62} + \frac{25}{61} + \frac{16}{60} + \frac{9}{59} + \frac{4}{58} + \frac{1}{57}$, this can be simplified to \[\sum_{n=1}^{8} \frac{(8-n)^2}{64-n}\] where n is the number of rooks.</p>
+</body>
+</html>
