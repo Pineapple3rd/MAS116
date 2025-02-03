@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"
+  integrity="sha384-AHAnt9ZhGeHIrydA1Kp1L7FN+2UosbF7RQg6C+9Is/a7kDpQ1684C2iH2VWil6r4"
+  crossorigin="anonymous">
+</script>
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+</script>
+<head>
+    <title>Semester 1 Individual Task</title>
+<link rel="stylesheet" type="text/css" href="groupproject.css">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+</head>
+
+<body>
+    <header>
+        <h1>Organising Rooks</h1>
+		
+    </header>
+
+<main>
+    <section>
+    <h2>Two rooks</h2>
+		<p>
+            A program that took random choices for placing two rooks 
+            in different squares of the chessboard. It would print out 
+            the location of both rooks with non-challenging configuration.
+        </p>
+    
+	<h3>A Python program</h3>
+		<script
+	    src="https://trinket.io/embed/python/a6c0314a2cda" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen>
+		</script>
+		<pre class="prettyprint linenums">
+				<code>
+<iframe src="https://trinket.io/embed/python/a6c0314a2cda" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+				</code>
+		</pre>
+        <div style="text-align: center;">
+        <figure class="image">
+        <img src="2 rooks.png" alt="Figure 1 two rooks on chessboard" width="300" height="300">
+        <figcaption>Figure 1 two rooks on chessboard</figcaption>
+        </figure>
+        <figure class="image">
+        <img src="output 1.png" alt="Output of the code" width="600" height="30" sizes="small">
+        <figcaption>Figure 2 Output of the code</figcaption>
+        </figure>
+        </div>
+    <h4>The Logic behind the code</h4>
+        <p> 
+            We split the code into 3 important parts, which are 
+            to allocate the location of both rooks and consider 
+            that both rooks don't fall under the same column and 
+            row, which has been done in line 9. We assign an empty 
+            array for the rook_location to make sure it's in 
+            a non-challenging configuration. Then, we can start 
+            the outline of the chessboard, which was taught in the 
+            previous computer class. We now need to assign black and 
+            white squares alternately. To make this work, the remainder 
+            of the row and column must be 1 to assign black, and 
+            vice versa for white (line 21). We now use plt.text 
+            (reference add text python matplotlib) to locate each rook.
+        </p>
+    <h2>Modify version</h2>
+		<p>
+			It increments a sizeable amount of times and prints 
+            out the fraction of configurations that are non-challenging. 
+		</p>
+		<script
+		src="https://trinket.io/embed/python/76c593524fe6" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen>
+		</script>
+        <pre class="prettyprint linenums">
+			<code>
+<iframe src="https://trinket.io/embed/python/76c593524fe6" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+			</code>
+		</pre>
+        <div style="text-align: center;">
+            <figure class="image">
+            <img src="Output 2.png" alt="Output 2" width="500" height="20">
+            <figcaption>Figure 3 The output of the code</figcaption>
+            </figure>
+        </div>
+        <h4>The Logic behind the code</h4>
+        <p>
+            Now we would have to determine the 
+            fraction for non-challenging configurations
+            We have a function `rooks_proportion` which accepts 
+            number of trials as parameter (line 4). Following this, 
+            we have a new variable `non_challenging_count', which 
+            counts for how many times a non-challenging configuration 
+            appears for each number of trials. The important part is line 10 
+            that compares every row and column for the first and second rooks 
+            to check whether they fall under the same row or the same column. 
+            In the case they do not fall under the same row and column, it 
+            will increment the `non_challenging_count by 1. This will keep 
+            repeating until the total number of trials is achieved.
+        </p>
+	</section>
+	<section>
+		<h2>The maths behind it</h2>
+            <p><ul><li>The first rook can be placed on any one of the $64$ 
+                squares of the board. Hence, the second rook may fall on 
+                one of the remaining $63$ squares, because it cannot fall 
+                in a position of the already placed first rook (Figure 1).
+                Hence the total ways of placing two rooks on the board 
+                is $64.63 = 4032$ This number will include challenging 
+                and non-challenging configurations. </li></p>
+            <p><li> The Non challenging configurations would be when the 
+                two rooks are in the different rows and different columns. 
+                To count these we use the following reasoning 
+                <p><ol><li>The first can go on any of the $64$ squares.</p></li>
+                <p><li>For the second rook to be at a non-attacking 
+                    position, it must be in a different row and a 
+                    different column. Since one row and one column is 
+                    already occupied by the first rook, there are $7$ 
+                    choices for the row and $7$ choices for the column 
+                    for the second rook. Thus, the number of non-attacking 
+                    configurations is $64.7.7 = 3136$</li></p>
+            </ol></p></li>
+            <p><li>To find the number of challenging configurations, 
+                we simply take the total number of configurations and 
+                subtract the non challenging ones, $4032 - 3136 = 896$.</li></p>
+            <p><li>The probability, within the simulation context, that a 
+                random placement is non-challenging is $P(non-challenging) 
+                = \frac{Number of non-challenging configurations}{Total number 
+                    of configurations} = \frac{3136}{4032} = 0.78$. That would 
+                    suggest that about $78%$ of random placements of two rooks 
+                    are non-challenging. P/S It isn't an exact $78%$ non-challenging 
+                    configurations are to be derived every time (Figure 3). This has to do 
+                    with the number of placements that were allowed for the rooks 
+                    in each simulation and how 'random' the selections have been 
+                    made. It is, however, constrained by simple mathematics-the 
+                    ratio of the number of non-challenging configurations versus 
+                    the total possible-to never rise above $78%$. The number of 
+                    non-challenging configurations relates to the total possible, 
+                    and thus it can never go over a ratio value of about $78%$. </li></p>
+            <p><li>Well, the Law of Large Numbers says that the more trials 
+                you do, the closer the average of the results will get to 
+                the expected value. For the simulation, this means the more 
+                simulations run, the closer the proportion of non-challenging 
+                configurations will be to the theoretical probability of $0.78$.</li></p>
+            </ul>
+	</section>
+    <section>
+        <h2>Three rooks</h2>
+        <h3>A Python program</h3>
+        <script
+		src="https://trinket.io/embed/python/c700833ed61f" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen>
+		</script>
+        <pre class="prettyprint linenums">
+			<code>
+<iframe src="https://trinket.io/embed/python/c700833ed61f" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+            </code>
+        </pre>
+        <div style="text-align: center;">
+            <figure class="image">
+            <img src="3 rooks.png" alt="Figure 4 three rooks on chessboard" width="300" height="300">
+            <figcaption>Figure 4 three rooks on chessboard</figcaption>
+            </figure>
+            <figure class="image">
+            <img src="Output 3.png" alt="Figure 5 Output of the code" width="500" height="20">
+            <figcaption>Figure 5 output of the code</figcaption>
+            </figure>
+        </div>
+        <h4>The logic behind the code</h4>
+        <p> Now, the code is similar to the previous one but with 
+            a few adjustments. Line 11 has been added to assign 
+            the third rook's location. The comparison is made in 
+            the same way as the previous code (line 13).
+        </p>
+        <h3>Maths explanation</h3>
+        <p>This allows combinatorics to provide us the count of the number of 
+            non-challenging configurations to put three rooks that no two of 
+            them are located in the same row or in the same column (Figure 4). Since 
+            first one has to choose $3$ rows out of the total of $8$ available 
+            that can be done in $\binom{3}{8} = 56$ ways. Similarly, we have 
+            to choose $3$ columns out of the $8$, and this also can be done in 
+            $\binom{8}{3}=56$ ways.Once the rows and columns are chosen, in 
+            the selected rows and columns, the three rooks can be arranged 
+            in $3! = 6$ ways, because the first rook has $3$ column options, the 
+            second rook has $2$, and the third has $1$. The total number of 
+            non-challenging configurations is then $\binom{8}{3}.\binom{8}{3}.3! 
+            = 56.56.6 = 18 816$. We now have to find the probability of the 
+            non-attacking configuration. Let us first get the number of ways 
+            one can place $3$ rooks at random on the board. That would be the 
+            number of ways of choosing $3$ squares out of the $64$ squares of the 
+            chessboard which is $\binom{64}{3} = 41 664$.Then the probability 
+            of a non-attacking configuration is given by the ratio of 
+            non-attacking configurations to the total configurations, that is, 
+            $P(non-challenging) = \frac{18 816}{41 664} = 0.45$.Thus, there is a 
+            $45%$ chance that a random placement of 3 rooks on the chessboard will 
+            result in a non-attacking configuration (Figure 5).
+        </p>
+    </section>
+    <section>
+        <h2>N rooks</h2>
+        <h3>A Python program</h3>
+        <script
+		src="https://trinket.io/embed/python/51223dd346c9" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen>
+		</script>
+        <pre class="prettyprint linenums">
+			<code>
+<iframe src="https://trinket.io/embed/python/51223dd346c9" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+            </code>
+        </pre>
+        <div style="text-align: center;">
+            <figure class="image">
+            <img src="5 rooks.png" alt="Figure 6 five rooks on chessboard" width="300" height="300">
+            <figcaption>Figure 6 five rooks on chessboard</figcaption>
+            </figure>
+            <figure class="image">
+            <img src="Output 4.png" alt="Figure 7 Output of the code" width="500" height="40">
+            <figcaption>Figure 7 Output of the code</figcaption>
+            </figure>
+        </div>
+        <h4>The logic behind the code</h4>
+        <p> 
+            The code has slight adjustments, similar to the 
+            'three rooks code.' We now take two parameters: 
+            the number of rooks required by the user and the 
+            number of trials. The first loop now has an inner 
+            loop that takes the number of rooks as a parameter 
+            (line 11). This inner loop appends to the empty array 
+            until it reaches the required number of rooks. The important 
+            part starts from line 14 to line 18, where the rooks are 
+            compared one by one to check whether they are in a 
+            non-challenging configuration. The main program has been 
+            extended with an if statement that checks whether the user 
+            input is correct or not (line 46).
+        </p>
+        <h3>Maths explanation</h3>
+        <p> The total number of ways to place the rooks is based on selecting and 
+            arranging them within the constraints of the chessboard. Since all $n$ rows 
+            and $n$ columns must be used, there is only one way to choose the rows and 
+            one way to choose the columns. The key task then becomes arranging the $n$ 
+            rooks in the selected rows and columns. This is a classic permutation 
+            problem, where the number of arrangements is $n!$.</p>
+        <p> From a probabilistic point of view, let us determine the 
+            probability that a random placement of $n$ rooks on the chessboard 
+            is unattacking. The total possible unrestricted placements of 
+            $n$ rooks equals the number of ways in which $n$ different squares 
+            from available squares, represented by $\binom{n^2}{n}$.</p>
+        <p> The probability of a non-challenging placement 
+            then is the ratio of the number of non-challenging configurations 
+            to total number of configurations $P(non-challenging) = \frac{n!}{\binom{n^2}{n}}$.
+            For larger and larger chessboards and more and more rooks, the chances of a non-challenging 
+            configuration are very poor. This is because for large values of 
+            $n$ grows much faster than $n!$</p>
+        <p>That makes it less and less likely that a random assignment would 
+            be non-challenging. Repeated several times, 
+            one can calculate the expected non-challenging configurations 
+            in a block of trials as $ P(non-challenging).Number of trials$. 
+            The results of these trials would follow a binomial 
+            distribution, indicating the chances of an assortment 
+            of different counts of non-distracting configurations occurring.</p>
+    </section>
+    <sub>
+        <h4>References</h4>
+        <p><ul><li><a href="https://www.researchgate.net/publication/351475846_When_Rooks_Miss_Probability_through_Chess#:~:text=place%20nrooks%20on%20an,%C2%B5%3D%201%2Fe2.&text=of%20approximately%2013.53%25%20(Figure%201)." target="_blank">Rooks and probability</a></li></p>
+        <p><li><a href="https://en.wikipedia.org/wiki/Rook_polynomial" target="_blank">Rooks polynomial</a></li></p>
+        <p><li><a href="https://web.williams.edu/Mathematics/sjmiller/public_html/math/papers/Rooks30.pdf" target="_blank">Rooks and probability</a></li></p>
+        <p><li><a href="https://www.geeksforgeeks.org/add-text-inside-the-plot-in-matplotlib/" target="_blank">Add text python matplotlib</a></li></p>
+        <p><li><a href="https://www.quora.com/Are-all-chess-board-configurations-possible-Are-there-any-constraints-imposed-by-the-rules" target="_blank">Chessboard configurations</a></li></p>
+        <p><li><a href="https://www.quora.com/How-many-ways-can-two-rooks-be-placed-on-a-chess-board-so-that-they-are-not-attacking-each-other" target="_blank">Rooks attacking</a></li></p>
+        <p><li><a href="https://stackoverflow.com/questions/70213002/print-out-chess-board-from-list-of-objects" target="_blank">Chessboard</a></li></p>
+    </ul>
+    </sub>
+        </main>
+    </body>
+</html>
